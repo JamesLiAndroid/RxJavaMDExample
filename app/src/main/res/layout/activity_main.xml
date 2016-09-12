@@ -8,6 +8,7 @@
     tools:context=".view.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -27,8 +28,19 @@
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="60dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginEnd="8dp"
         android:src="@android:drawable/ic_menu_add" />
+
+    <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        app:bb_tabXmlResource="@xml/bottombar_menu"
+        app:bb_inActiveTabAlpha="0.6"
+        app:bb_behavior="shy|shifting|underNavbar"/>
 
 </android.support.design.widget.CoordinatorLayout>
