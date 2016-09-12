@@ -4,10 +4,17 @@
     android:layout_height="match_parent"
     tools:context="com.james.li.rxjavaexample.view.fragment.HelloWorldFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/fragment_first_example_swipe_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_first_example_list"
+                android:clipToPadding="false"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                />
+        </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>

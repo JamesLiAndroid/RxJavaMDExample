@@ -43,4 +43,8 @@ dependencies {
 
     // lombok JavaBean注解
     compile 'org.projectlombok:lombok:1.16.10'
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+
+    // Gson
+    compile 'com.google.code.gson:gson:2.7'
 }
