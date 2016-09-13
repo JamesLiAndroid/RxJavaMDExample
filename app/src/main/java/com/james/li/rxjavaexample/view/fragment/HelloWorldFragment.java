@@ -1,5 +1,6 @@
 package com.james.li.rxjavaexample.view.fragment;
 
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
@@ -9,10 +10,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -63,6 +66,8 @@ public class HelloWorldFragment extends Fragment {
 
     private File mFilesDir;
 
+    private Gson gson = new Gson();
+
     public HelloWorldFragment() {
         // Required empty public constructor
     }
@@ -102,7 +107,6 @@ public class HelloWorldFragment extends Fragment {
             }
         });
 
-
         // 开始加载数据
         mSwipeRefreshLayout.setEnabled(true);
         mSwipeRefreshLayout.setRefreshing(true);
@@ -117,36 +121,40 @@ public class HelloWorldFragment extends Fragment {
                         refreshTheList();
                     }
                 });
+
     }
 
     /**
      * 刷新App数据
      */
     private void refreshTheList() {
-        getApps().toSortedList().subscribe(new Observer<List<AppInfo>>() {
-            @Override
-            public void onCompleted() {
-                Toast.makeText(getActivity(), "刷新完毕！", Toast.LENGTH_SHORT).show();
-            }
+        getApps().toSortedList().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<AppInfo>>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(getActivity(), "刷新完毕！", Toast.LENGTH_SHORT).show();
+                    }
 
-            @Override
-            public void onError(Throwable e) {
-                Toast.makeText(getActivity(), "数据加载出错！", Toast.LENGTH_SHORT).show();
-                mSwipeRefreshLayout.setRefreshing(false);
-            }
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getActivity(), "数据加载出错！", Toast.LENGTH_SHORT).show();
+                        mSwipeRefreshLayout.setRefreshing(false);
+                    }
 
-            @Override
-            public void onNext(List<AppInfo> appInfos) {
-                mRecyclerView.setVisibility(View.VISIBLE);
-                mAdapter.addApplications(appInfos);
-                mSwipeRefreshLayout.setRefreshing(false);
-                storeList(appInfos);
-            }
-        });
+                    @Override
+                    public void onNext(List<AppInfo> appInfos) {
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        mAdapter.addApplications(appInfos);
+                        mSwipeRefreshLayout.setRefreshing(false);
+                        storeList(appInfos);
+                    }
+                });
     }
 
     /**
      * 存储获取的应用信息
+     *
      * @param appInfos
      */
     private void storeList(final List<AppInfo> appInfos) {
@@ -155,17 +163,17 @@ public class HelloWorldFragment extends Fragment {
         Schedulers.io().createWorker().schedule(new Action0() {
             @Override
             public void call() {
-                Type appInfoType = new TypeToken<List<AppInfo>>(){
+                Type appInfoType = new TypeToken<List<AppInfo>>() {
                 }.getType();
-                Gson gson = new Gson();
                 String json = gson.toJson(appInfos, appInfoType);
-                ACache.get(getActivity()).put("APPS", json);
+                ACache.get(getActivity()).put("APPS", json, 60 * 2); // 设置缓存时间
             }
         });
     }
 
     /**
      * 获取文件所在路径
+     *
      * @return
      */
     private Observable<File> getFileDir() {
@@ -197,6 +205,33 @@ public class HelloWorldFragment extends Fragment {
         return Observable.create(new Observable.OnSubscribe<AppInfo>() {
             @Override
             public void call(Subscriber<? super AppInfo> subscriber) {
+                List<AppInfo> appInfos = null;
+                if (ACache.get(getActivity()).getAsString("APPS") != null) {
+                    Log.d("TAG","json数据存在");
+                    if (ApplicationList.getInstance().getList() != null) {
+                        appInfos = ApplicationList.getInstance().getList();
+                        Log.d("TAG","从列表获取");
+                    } else {
+                        Log.d("TAG","从json数据获取");
+                        String json = ACache.get(getActivity()).getAsString("APPS");
+                        appInfos = gson.fromJson(json,
+                                new TypeToken<List<AppInfo>>() {
+                                }.getType());
+                    }
+                    // 直接获取内容
+                    for (AppInfo appInfo: appInfos) {
+                        if (subscriber.isUnsubscribed()) {
+                            return;
+                        }
+                        subscriber.onNext(appInfo);
+                    }
+
+                    if (!subscriber.isUnsubscribed()) {
+                        subscriber.onCompleted();
+                    }
+                    return;
+                }
+                Log.d("TAG","json数据不存在！");
                 List<AppInfoRich> apps = new ArrayList<AppInfoRich>();
 
                 final Intent intent = new Intent(Intent.ACTION_MAIN, null);
@@ -225,5 +260,10 @@ public class HelloWorldFragment extends Fragment {
                 }
             }
         });
+    }
+
+    private void loadAppsFromCurrentList(List<AppInfo> appInfos) {
+
+
     }
 }
