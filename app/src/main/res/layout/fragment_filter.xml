@@ -1,13 +1,116 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.james.li.rxjavaexample.view.fragment.FilterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll_btns_filter_next"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <Button
+            android:id="@+id/btn_element_at"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Element_At"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_sampling"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="sampling"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_timeout"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="distinct"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_debounce"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="first"
+            android:textSize="10dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_btns_filter"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_btns_filter_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_filter"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="filter"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_take"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="take"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_distinct"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="distinct"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_first"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="first"
+            android:textSize="10dp"
+            />
+        <Button
+            android:id="@+id/btn_skip"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="skip"
+            android:textSize="10dp"
+            />
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/fragment_filter_example_swipe_container"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/ll_btns_filter"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_filter_example_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>

@@ -186,7 +186,7 @@ public class HelloWorldFragment extends Fragment {
                 Type appInfoType = new TypeToken<List<AppInfo>>() {
                 }.getType();
                 String json = gson.toJson(appInfos, appInfoType);
-                ACache.get(getActivity()).put("APPS", json, 60 * 2); // 设置缓存时间
+                ACache.get(getActivity()).put("APPS", json, 60 * 20); // 设置缓存时间
             }
         });
     }

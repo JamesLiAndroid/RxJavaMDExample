@@ -2,6 +2,8 @@ package com.james.li.rxjavaexample.utils;
 
 import android.util.Log;
 
+import com.james.li.rxjavaexample.bean.AppInfo;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -9,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func0;
+import rx.functions.Func1;
 
 /**
  * Created by jyj-lsy on 9/13/16 in zsl-tech.
@@ -115,4 +118,89 @@ public class UtilsTestOperator {
         Observable<Long> observable = Observable.timer(a, TimeUnit.SECONDS);
         return observable;
     }
+
+    /**
+     * 过滤操作符的Base操作
+     * @param appInfos
+     * @return
+     */
+    private static Observable<AppInfo> filterBase(List<AppInfo> appInfos) {
+        Observable<AppInfo> observable = Observable.from(appInfos);
+        return observable;
+    }
+
+    /**
+     * filter操作符
+     * @return
+     */
+    public static Observable<AppInfo> filterTest(List<AppInfo> appInfos) {
+        Observable<AppInfo> observable = filterBase(appInfos).filter(new Func1<AppInfo, Boolean>() {
+            @Override
+            public Boolean call(AppInfo appInfo) {
+                return appInfo.getName().startsWith("C");
+            }
+        });
+
+        return observable;
+    }
+
+    /**
+     * take操作符,takeLast操作符同理
+     * @return
+     */
+    public static Observable<AppInfo> takeTest(List<AppInfo> appInfos) {
+        Observable<AppInfo> observable = filterBase(appInfos).take(3);
+        return observable;
+    }
+
+    /**
+     * 创建重复列表
+     * @param appInfos
+     * @return
+     */
+    private static Observable<AppInfo> createRepeatApps(List<AppInfo> appInfos) {
+        Observable<AppInfo> observable = filterBase(appInfos).take(4).repeat(4);
+        return observable;
+    }
+
+    /**
+     * distinct操作符
+     * @return
+     */
+    public static Observable<AppInfo> distinctTest(List<AppInfo> appInfos) {
+        Observable<AppInfo> observable = createRepeatApps(appInfos).distinct();
+        return observable;
+    }
+
+    /**
+     * first操作符,last操作符同理
+     * @return
+     */
+    public static Observable<AppInfo> firstTest(List<AppInfo> appInfos) {
+        Observable<AppInfo> observable = createRepeatApps(appInfos).first();
+        return observable;
+    }
+
+    /**
+     * skip操作符,skipLast操作符同理，而且对应于take和takeLast
+     * @return
+     */
+    public static Observable<AppInfo> skipTest(List<AppInfo> appInfos) {
+        Observable<AppInfo> observable = filterBase(appInfos).skip(4);
+        return observable;
+    }
+
+    /**
+     * elementAt操作符
+     * @param appInfos
+     * @return
+     */
+    public static Observable<AppInfo> elementAtTest(List<AppInfo> appInfos) {
+        Observable<AppInfo> observable = filterBase(appInfos).elementAt(5);
+        return observable;
+    }
+/*
+    public static Observable<String> samplingTest() {
+
+    }*/
 }
