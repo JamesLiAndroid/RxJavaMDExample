@@ -84,7 +84,9 @@ public class HelloWorldFragment extends Fragment {
     }
 
     private void initViews(View view) {
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        LinearLayoutManager manager = new LinearLayoutManager(view.getContext());
+        manager.setSmoothScrollbarEnabled(true);
+        mRecyclerView.setLayoutManager(manager);
 
         mAdapter = new ApplicationAdapter(new ArrayList<AppInfo>());
         mRecyclerView.setAdapter(mAdapter);

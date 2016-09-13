@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);
+        toolbar.setCollapsible(true);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +101,8 @@ public class MainActivity extends AppCompatActivity {
         // 设置Adapter
         FragmentManager manager = this.getSupportFragmentManager();
         viewPager.setAdapter(new MyFragmentAdapter(fragmentList, manager));
-
+        // 设置缓存5个页面的Fragment
+        viewPager.setOffscreenPageLimit(5);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
