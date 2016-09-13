@@ -1,12 +1,81 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.james.li.rxjavaexample.view.fragment.HelloWorldFragment">
 
+    <LinearLayout
+        android:id="@+id/ll_btns"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_from"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10dp"
+            android:text="from"
+            />
+        <Button
+            android:id="@+id/btn_just"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10dp"
+            android:text="just"
+            />
+        <Button
+            android:id="@+id/btn_repeat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10dp"
+            android:text="repeat"
+            />
+        <Button
+            android:id="@+id/btn_defer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="10dp"
+            android:text="defer"
+            />
+
+        <Button
+            android:id="@+id/btn_range"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="range"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_interval"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="interval"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_timer"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="timer"
+            android:textSize="10dp"
+            />
+
+    </LinearLayout>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/fragment_first_example_swipe_container"
         android:layout_width="match_parent"
+        android:layout_below="@+id/ll_btns"
         android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
@@ -15,4 +84,4 @@
             android:layout_height="match_parent"
             android:clipToPadding="false" />
     </android.support.v4.widget.SwipeRefreshLayout>
-</FrameLayout>
+</RelativeLayout>
