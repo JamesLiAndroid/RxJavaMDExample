@@ -282,11 +282,7 @@ public class HelloWorldFragment extends Fragment {
         });
     }
 
-    private void loadAppsFromCurrentList(List<AppInfo> appInfos) {
-
-
-    }
-
+    int i = 1;
     @OnClick({R.id.btn_from, R.id.btn_just, R.id.btn_repeat, R.id.btn_defer, R.id.btn_range, R.id.btn_interval, R.id.btn_timer})
     public void onClick(View view) {
         switch (view.getId()) {
@@ -331,14 +327,112 @@ public class HelloWorldFragment extends Fragment {
                 });
                 break;
             case R.id.btn_repeat:
+                // repeat操作符
+                UtilsTestOperator.repeatTest(10).subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(getActivity(), "repeat操作符测试完毕", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getActivity(), "读取数字错误！", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d("TAG","repeat操作获取的数字为："+integer);
+                        Toast.makeText(getActivity(), "获取的数字为："+integer, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case R.id.btn_defer:
+                // defer操作符
+                UtilsTestOperator.deferTest(i).subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(getActivity(), "defer操作符测试完毕", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getActivity(), "读取数字错误！", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d("TAG","defer操作获取的数字为："+integer);
+                        Toast.makeText(getActivity(), "获取的数字为："+integer, Toast.LENGTH_SHORT).show();
+                    }
+                });
+                i = 23;
                 break;
             case R.id.btn_range:
+                // range操作符
+                UtilsTestOperator.rangeTest(22, 4).subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(getActivity(), "range操作符测试完毕", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getActivity(), "读取数字错误！", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d("TAG","range操作获取的数字为："+integer);
+                        Toast.makeText(getActivity(), "获取的数字为："+integer, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case R.id.btn_interval:
+                // interval操作符
+                UtilsTestOperator.intervalTest(3)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(getActivity(), "interval操作符测试完毕", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Toast.makeText(getActivity(), "读取数字错误！", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Log.d("TAG","range操作获取的数字为Long:"+integer);
+                        Toast.makeText(getActivity(), "获取的数字为："+integer, Toast.LENGTH_SHORT).show();
+                    }
+                });
                 break;
             case R.id.btn_timer:
+                Log.d("TAG","当前时间");
+                // timer操作符
+                UtilsTestOperator.timerTest(10)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<Long>() {
+                            @Override
+                            public void onCompleted() {
+                                Toast.makeText(getActivity(), "timer操作符测试完毕", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Toast.makeText(getActivity(), "读取数字错误！", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onNext(Long integer) {
+                                Log.d("TAG","timer操作获取的数字为Long:"+integer);
+                                Toast.makeText(getActivity(), "获取的数字为："+integer, Toast.LENGTH_SHORT).show();
+                            }
+                        });
                 break;
         }
     }
