@@ -314,6 +314,12 @@ public class FilterFragment extends Fragment {
                 break;
             case R.id.btn_element_at:
                 // ElementAt操作符
+                /**
+                 * 需要强调的是，一定将
+                 *  .subscribeOn(Schedulers.io())
+                 *  .observeOn(AndroidSchedulers.mainThread())
+                 * 放在变换，过滤，组合等操作符之后，放在subscribe()方法之前
+                 */
                 mSwipeRefreshLayout.setRefreshing(true);
                 appInfosResult.clear();
                 mAdapter.clearApplications();
@@ -353,25 +359,30 @@ public class FilterFragment extends Fragment {
                         }
                         subscriber.onCompleted();
                     }
-                }).observeOn(Schedulers.io())
-                        .subscribeOn(AndroidSchedulers.mainThread())
-                        .sample(3, TimeUnit.SECONDS).subscribe(new Observer<String>() {
+                }).sample(3, TimeUnit.SECONDS)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new Observer<String>() {
                     @Override
                     public void onCompleted() {
                         mSwipeRefreshLayout.setRefreshing(false);
-                        //Toast.makeText(getActivity(), "sample操作符加载数据完成！", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "sample操作符加载数据完成！", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        Toast.makeText(getActivity(), "加载出错！", Toast.LENGTH_SHORT).show();
-                        mSwipeRefreshLayout.setRefreshing(false);
+                        try {
+                            Toast.makeText(getActivity(), "加载出错！", Toast.LENGTH_SHORT).show();
+                            mSwipeRefreshLayout.setRefreshing(false);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
                     }
 
                     @Override
                     public void onNext(String s) {
                         Log.d("TAG","onNext:"+s);
-                        // Toast.makeText(getActivity(), "sample操作符加载数据+" + s, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getActivity(), "sample操作符加载数据+" + s, Toast.LENGTH_SHORT).show();
                     }
                 });
                 break;
