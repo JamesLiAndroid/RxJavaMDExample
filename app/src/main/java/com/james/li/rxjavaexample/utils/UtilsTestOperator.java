@@ -4,7 +4,9 @@ import android.util.Log;
 
 import com.james.li.rxjavaexample.bean.AppInfo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +14,7 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.functions.Func0;
 import rx.functions.Func1;
+import rx.observables.GroupedObservable;
 
 /**
  * Created by jyj-lsy on 9/13/16 in zsl-tech.
@@ -245,6 +248,19 @@ public class UtilsTestOperator {
         }).debounce(600, TimeUnit.MILLISECONDS);
     }
 
-
+    /**
+     * groupBy操作符
+     * @param appInfoList
+     * @return
+     */
+    public static Observable<GroupedObservable<String,AppInfo>> groupByTest(List<AppInfo> appInfoList) {
+        return Observable.from(appInfoList).groupBy(new Func1<AppInfo, String>() {
+            @Override
+            public String call(AppInfo appInfo) {
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/yyyy");
+                return formatter.format(new Date(appInfo.getLastUpdateTime()));
+            }
+        });
+    }
 
 }

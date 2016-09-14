@@ -94,8 +94,8 @@ public class MainActivity extends AppCompatActivity {
         // 添加Fragment
         fragmentList.add(new HelloWorldFragment());
         fragmentList.add(new FilterFragment());
-        fragmentList.add(new CombinationFragment());
         fragmentList.add(new TransformFragment());
+        fragmentList.add(new CombinationFragment());
         fragmentList.add(new ThreadFragment());
 
         // 设置Adapter

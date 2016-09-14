@@ -1,13 +1,134 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.james.li.rxjavaexample.view.fragment.TransformFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        tools:context="com.james.li.rxjavaexample.view.fragment.FilterFragment">
 
-</FrameLayout>
+        <LinearLayout
+            android:id="@+id/ll_btns_filter_next"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_scan"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Scan"
+                android:textSize="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_buffer"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Buffer"
+                android:textSize="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_group_by"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="GroupBy"
+                android:textSize="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_window"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Window"
+                android:textSize="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_cast"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Cast"
+                android:textSize="10dp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_btns_filter"
+            android:orientation="horizontal"
+            android:layout_below="@+id/ll_btns_filter_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/btn_map"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="map"
+                android:textSize="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_flat_map"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="FlatMap"
+                android:textSize="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_concat_map"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="ConcatMap"
+                android:textSize="10dp"
+                />
+
+            <Button
+                android:id="@+id/btn_flat_map_iterable"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="FlatMapIterable"
+                android:textSize="10dp"
+                />
+            <Button
+                android:id="@+id/btn_switch_map"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="SwitchMap"
+                android:textSize="10dp"
+                />
+        </LinearLayout>
+
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/fragment_filter_example_swipe_container"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/ll_btns_filter"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/fragment_filter_example_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false" />
+        </android.support.v4.widget.SwipeRefreshLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
