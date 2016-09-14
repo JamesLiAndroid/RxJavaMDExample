@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="distinct"
+            android:text="TimeOut"
             android:textSize="10dp"
             />
 
@@ -42,7 +42,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="first"
+            android:text="Debounce"
             android:textSize="10dp"
             />
     </LinearLayout>

@@ -345,6 +345,7 @@ public class FilterFragment extends Fragment {
                 break;
             case R.id.btn_sampling:
                 // sampling操作符，写在本地
+                // 理解这个操作符需要添加时间轴来理解
                 Observable.create(new Observable.OnSubscribe<String>() {
                     @Override
                     public void call(Subscriber<? super String> subscriber) {
@@ -359,7 +360,8 @@ public class FilterFragment extends Fragment {
                         }
                         subscriber.onCompleted();
                     }
-                }).sample(3, TimeUnit.SECONDS)
+                })//.throttleFirst(3, TimeUnit.SECONDS) // 定时发射第一个元素
+                        .sample(3, TimeUnit.SECONDS) // 定时发射最近的一个元素
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new Observer<String>() {
@@ -387,8 +389,55 @@ public class FilterFragment extends Fragment {
                 });
                 break;
             case R.id.btn_timeout:
+                // TimeOut操作符
+                UtilsTestOperator.timeOutTest()
+                        .subscribeOn(Schedulers.io())//the thread *observer* runs in
+                        .observeOn(AndroidSchedulers.mainThread())//the thread *subscriber* runs in
+                        .subscribe(new Observer<Integer>() {
+                    @Override
+                    public void onCompleted() {
+                        Toast.makeText(getActivity(), "timeout操作符加载数据完成！", Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d("TAG","超时！"); // 超时会触发onError函数
+                        Toast.makeText(getActivity(), "超时！超时！", Toast.LENGTH_SHORT).show();
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onNext(Integer integer) {
+                        Toast.makeText(getActivity(), "timeout=+++" + integer, Toast.LENGTH_SHORT).show();
+                        Log.d("TAG","TimeOut++"+integer);
+                    }
+                });
                 break;
             case R.id.btn_debounce:
+                // debounce操作符
+                UtilsTestOperator.debounceTest()
+                        .subscribeOn(Schedulers.io())//the thread *observer* runs in
+                        .observeOn(AndroidSchedulers.mainThread())//the thread *subscriber* runs in
+                        .subscribe(new Observer<Integer>() {
+                            @Override
+                            public void onCompleted() {
+                                Log.d("TAG","onComplete");
+                                Toast.makeText(getActivity(), "debounce操作符加载数据完成！", Toast.LENGTH_SHORT).show();
+                            }
+
+                            @Override
+                            public void onError(Throwable e) {
+                                Log.d("TAG","eeeeeeeee"); // 超时会触发onError函数
+                                Toast.makeText(getActivity(), "Error！", Toast.LENGTH_SHORT).show();
+                                e.printStackTrace();
+                            }
+
+                            @Override
+                            public void onNext(Integer integer) {
+                                Toast.makeText(getActivity(), "debounce=+++" + integer, Toast.LENGTH_SHORT).show();
+                                Log.d("TAG","debounce++"+integer);
+                            }
+                        });
                 break;
             default:
                 break;

@@ -199,8 +199,52 @@ public class UtilsTestOperator {
         Observable<AppInfo> observable = filterBase(appInfos).elementAt(5);
         return observable;
     }
-/*
-    public static Observable<String> samplingTest() {
 
-    }*/
+
+    /**
+     * timeout操作符
+     * @return
+     */
+    public static Observable<Integer> timeOutTest() {
+        return Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                for (int i = 0; i < 6; i++) {
+                    try {
+                        Thread.sleep(i * 100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        subscriber.onError(e);
+                    }
+                    subscriber.onNext(i);
+                }
+                subscriber.onCompleted();
+            }
+        }).timeout(200, TimeUnit.MILLISECONDS);
+    }
+
+    /**
+     * Debounce操作符, 过滤发射过快的元素
+     * @return
+     */
+    public static Observable<Integer> debounceTest() {
+        return Observable.create(new Observable.OnSubscribe<Integer>() {
+            @Override
+            public void call(Subscriber<? super Integer> subscriber) {
+                for (int i = 0; i < 6; i++) {
+                    try {
+                        Thread.sleep(i * 100);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                        subscriber.onError(e);
+                    }
+                    subscriber.onNext(i);
+                }
+                subscriber.onCompleted();
+            }
+        }).debounce(600, TimeUnit.MILLISECONDS);
+    }
+
+
+
 }
