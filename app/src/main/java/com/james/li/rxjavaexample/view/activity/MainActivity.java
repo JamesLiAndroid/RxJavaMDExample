@@ -1,6 +1,7 @@
 package com.james.li.rxjavaexample.view.activity;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.IdRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -14,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.james.li.rxjavaexample.BuildConfig;
 import com.james.li.rxjavaexample.R;
 import com.james.li.rxjavaexample.adapter.MyFragmentAdapter;
 import com.james.li.rxjavaexample.view.fragment.CombinationFragment;
@@ -50,6 +52,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        // 设置debug时采用StrictMode
+        if (BuildConfig.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().penaltyLog().build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().penaltyLog().build());
+        }
 
         setSupportActionBar(toolbar);
         toolbar.setCollapsible(true);

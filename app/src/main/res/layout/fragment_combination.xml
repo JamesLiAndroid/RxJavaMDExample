@@ -1,13 +1,117 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.james.li.rxjavaexample.view.fragment.CombinationFragment">
+    tools:context="com.james.li.rxjavaexample.view.fragment.FilterFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/ll_btns_filter_next"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content">
 
-</FrameLayout>
+        <Button
+            android:id="@+id/btn_switch"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="switch"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_start_with"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="sampling"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_merge_delay_error"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="MergeDelayError"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_debounce"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Debounce"
+            android:textSize="10dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_btns_filter"
+        android:orientation="horizontal"
+        android:layout_below="@+id/ll_btns_filter_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_merge"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="merge"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_zip"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="zip"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_join"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="join"
+            android:textSize="10dp"
+            />
+
+        <Button
+            android:id="@+id/btn_conbine_latest"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="combineLatest"
+            android:textSize="10dp"
+            />
+        <Button
+            android:id="@+id/btn_and_then_when"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="And,Then,When"
+            android:textSize="10dp"
+            />
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/fragment_filter_example_swipe_container"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/ll_btns_filter"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_filter_example_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+
+
+</RelativeLayout>
+

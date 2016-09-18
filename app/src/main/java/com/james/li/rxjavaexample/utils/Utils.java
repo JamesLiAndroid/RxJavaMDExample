@@ -7,6 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 
+import com.james.li.rxjavaexample.bean.AppInfo;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -80,4 +82,14 @@ public class Utils {
         }
     }
 
+    /**
+     * 更新app Title
+     * @param appInfo
+     * @param time
+     * @return
+     */
+    public static AppInfo updateTitle(AppInfo appInfo, Long time) {
+        appInfo.setName(time+ " "+ appInfo.getName());
+        return appInfo;
+    }
 }
