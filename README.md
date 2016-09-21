@@ -2,6 +2,7 @@
 RxJava实例
 
 参考教程：http://rxjava.yuxingxin.com/chapter3/our_first_observable.html
+
 gitbook地址：https://www.gitbook.com/book/yuxingxin/rxjava-essentials-cn/details 
 
 配合该教程使用：https://www.gitbook.com/book/mcxiaoke/rxdocs/details
